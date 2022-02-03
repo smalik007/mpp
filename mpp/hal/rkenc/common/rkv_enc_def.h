@@ -41,7 +41,6 @@
 
 #define RKVE_CSP2_MASK             0x00ff  /* */
 #define RKVE_CSP2_NONE             0x0000  /* Invalid mode     */
-#define RKVE_CSP2_I420             0x0001  /* yuv 4:2:0 planar */
 #define RKVE_CSP2_YV12             0x0002  /* yvu 4:2:0 planar */
 #define RKVE_CSP2_NV12             0x0003  /* yuv 4:2:0, with one y plane and one packed u+v */
 #define RKVE_CSP2_I422             0x0004  /* yuv 4:2:2 planar */

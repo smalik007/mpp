@@ -229,7 +229,7 @@ MPP_RET h265e_set_sps(H265eCtx *ctx, H265eSps *sps, H265eVps *vps)
 
     sps->m_SPSId = 0;
     sps->m_VPSId = 0;
-    sps->m_chromaFormatIdc = 0x1; //RKVE_CSP2_I420;
+    sps->m_chromaFormatIdc = 0x1; //RKVE_CSP2_I420; ??
     sps->m_maxTLayers = 1;
     sps->m_picWidthInLumaSamples = prep->width + pad[0];
     sps->m_picHeightInLumaSamples = prep->height + pad[1];

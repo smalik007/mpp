@@ -209,7 +209,6 @@ typedef enum {
     MPP_FMT_YUV420SP_10BIT  = (MPP_FRAME_FMT_YUV + 1),
     MPP_FMT_YUV422SP        = (MPP_FRAME_FMT_YUV + 2),  /* YYYY... UVUV... (NV16)   */
     MPP_FMT_YUV422SP_10BIT  = (MPP_FRAME_FMT_YUV + 3),  ///< Not part of ABI
-    MPP_FMT_YUV420P         = (MPP_FRAME_FMT_YUV + 4),  /* YYYY... U...V...  (I420) */
     MPP_FMT_YUV420SP_VU     = (MPP_FRAME_FMT_YUV + 5),  /* YYYY... VUVUVU... (NV21) */
     MPP_FMT_YUV422P         = (MPP_FRAME_FMT_YUV + 6),  /* YYYY... UU...VV...(422P) */
     MPP_FMT_YUV422SP_VU     = (MPP_FRAME_FMT_YUV + 7),  /* YYYY... VUVUVU... (NV61) */

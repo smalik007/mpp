@@ -559,7 +559,6 @@ static MppFrameFormatInfo color_list[] = {
     { MPP_FMT_YUV420SP_10BIT,   "YUV420SP-10bit"        },
     { MPP_FMT_YUV422SP,         "YUV422SP,      NV24"   },
     { MPP_FMT_YUV422SP_10BIT,   "YUV422SP-10bit"        },
-    { MPP_FMT_YUV420P,          "YUV420P,       I420"   },
     { MPP_FMT_YUV420SP_VU,      "YUV420SP,      NV21"   },
     { MPP_FMT_YUV422P,          "YUV422P,       422P"   },
     { MPP_FMT_YUV422SP_VU,      "YUV422SP,      NV42"   },
