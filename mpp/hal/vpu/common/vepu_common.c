@@ -208,12 +208,6 @@ RK_U32 get_vepu_pixel_stride(VepuStrideCfg *cfg, RK_U32 width, RK_U32 stride, Mp
             cfg->not_8_pixel = 1;
         }
     } break;
-    case MPP_FMT_YUV420P : {
-        if (check_8_pixel_aligned(cfg->not_8_pixel, hor_stride, 16, 1, "YUV420P")) {
-            hor_stride = MPP_ALIGN(hor_stride, 8);
-            cfg->not_8_pixel = 1;
-        }
-    } break;
     case MPP_FMT_YUV422_YUYV :
     case MPP_FMT_YUV422_UYVY : {
         if (check_stride_by_pixel(cfg->is_pixel_stride, cfg->width,
@@ -299,11 +293,6 @@ MPP_RET get_vepu_offset_cfg(VepuOffsetCfg *cfg)
             cfg->offset_byte[0] = offset_y * hor_stride + offset_x;
             cfg->offset_byte[1] = offset_y / 2 * hor_stride + offset_x + offset_c;
         } break;
-        case MPP_FMT_YUV420P : {
-            cfg->offset_byte[0] = offset_y * hor_stride + offset_x;
-            cfg->offset_byte[1] = (offset_y / 2) * (hor_stride / 2) + (offset_x / 2) + offset_c;
-            cfg->offset_byte[2] = (offset_y / 2) * (hor_stride / 2) + (offset_x / 2) + offset_c * 5 / 4;
-        } break;
         case MPP_FMT_YUV422_YUYV :
         case MPP_FMT_YUV422_UYVY : {
             mpp_assert((offset_x & 1) == 0);
@@ -330,14 +319,10 @@ MPP_RET get_vepu_offset_cfg(VepuOffsetCfg *cfg)
         }
     } else {
         switch (fmt) {
-        case MPP_FMT_YUV420SP :
-        case MPP_FMT_YUV420P : {
+        case MPP_FMT_YUV420SP : {
             RK_U32 offset = hor_stride * ver_stride;
 
             cfg->offset_byte[1] = offset;
-
-            if (fmt == MPP_FMT_YUV420P)
-                offset = hor_stride * ver_stride * 5 / 4;
 
             cfg->offset_byte[2] = offset;
         } break;

@@ -1011,7 +1011,7 @@ static MPP_RET set_parameter(void *hal)
         RK_U32 ver_offset_src = 0;
         RK_U8 video_stab = 0;
 
-        if (set->format == MPP_FMT_YUV420SP || set->format == MPP_FMT_YUV420P) {
+        if (set->format == MPP_FMT_YUV420SP ) {
             tmp = ver_offset_src;
             tmp *= stride;
             tmp += hor_offset_src;
@@ -1021,23 +1021,14 @@ static MPP_RET set_parameter(void *hal)
             if (video_stab)
                 hw_cfg->vs_next_luma_base += (tmp & (~7));
 
-            if (set->format == MPP_FMT_YUV420P) {
-                tmp = ver_offset_src / 2;
-                tmp *= stride / 2;
-                tmp += hor_offset_src / 2;
+            tmp = ver_offset_src / 2;
+            tmp *= stride / 2;
+            tmp += hor_offset_src / 2;
+            tmp *= 2;
 
-                hw_cfg->input_cb_base += (tmp & (~7));
-                hw_cfg->input_cr_base += (tmp & (~7));
-                hw_cfg->input_chroma_base_offset = tmp & 7;
-            } else {
-                tmp = ver_offset_src / 2;
-                tmp *= stride / 2;
-                tmp += hor_offset_src / 2;
-                tmp *= 2;
+            hw_cfg->input_cb_base += (tmp & (~7));
+            hw_cfg->input_chroma_base_offset = tmp & 7;
 
-                hw_cfg->input_cb_base += (tmp & (~7));
-                hw_cfg->input_chroma_base_offset = tmp & 7;
-            }
         } else if (set->format <= MPP_FMT_BGR444 && set->format >= MPP_FMT_RGB565) {
             tmp = ver_offset_src;
             tmp *= stride;

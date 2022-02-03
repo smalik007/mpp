@@ -181,9 +181,6 @@ MPP_RET test_ctx_init(MpiEncTestData **data, MpiEncTestArgs *cmd)
     // update resource parameter
     switch (p->fmt & MPP_FRAME_FMT_MASK) {
     case MPP_FMT_YUV420SP:
-    case MPP_FMT_YUV420P: {
-        p->frame_size = MPP_ALIGN(p->hor_stride, 64) * MPP_ALIGN(p->ver_stride, 64) * 3 / 2;
-    } break;
 
     case MPP_FMT_YUV422_YUYV :
     case MPP_FMT_YUV422_YVYU :

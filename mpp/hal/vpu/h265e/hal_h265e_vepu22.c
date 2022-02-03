@@ -440,7 +440,6 @@ static MPP_RET vepu22_check_prep_parameter(MppEncPrepCfg *set)
     }
 
     if (set->format !=  MPP_FMT_YUV420SP &&
-        set->format !=  MPP_FMT_YUV420P &&
         set->format != MPP_FMT_YUV420SP_VU) {
         mpp_err_f("ERROR: invalid format %d is not supportted\n", set->format);
         return MPP_NOK;
@@ -518,13 +517,6 @@ static RK_U8 vepu22_get_yuv_format(HalH265eCtx* ctx)
     switch (format) {
     case MPP_FMT_YUV420SP:
         output_format = H265E_SRC_YUV_420_NV12;
-        break;
-
-    case MPP_FMT_YUV420P:
-        output_format = H265E_SRC_YUV_420_YU12;
-        if (vepu22_need_pre_process(ctx) != MPP_OK) {
-            output_format = H265E_SRC_YUV_420_NV12;
-        }
         break;
 
     case MPP_FMT_YUV420SP_VU:

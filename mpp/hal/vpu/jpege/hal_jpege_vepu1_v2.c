@@ -150,8 +150,7 @@ static MPP_RET hal_jpege_vepu1_set_extra_info(MppDev dev, JpegeSyntax *syntax,
     MppDevRegOffsetCfg trans_cfg;
 
     switch (fmt) {
-    case MPP_FMT_YUV420SP :
-    case MPP_FMT_YUV420P : {
+    case MPP_FMT_YUV420SP : {
         if (start_mbrow) {
             offset = 16 * start_mbrow * hor_stride;
 
@@ -161,15 +160,10 @@ static MPP_RET hal_jpege_vepu1_set_extra_info(MppDev dev, JpegeSyntax *syntax,
         }
 
         offset = hor_stride * ver_stride + hor_stride * start_mbrow * 16 / 2;
-        if (fmt == MPP_FMT_YUV420P)
-            offset = hor_stride * start_mbrow * 16 / 4 + hor_stride * ver_stride;
 
         trans_cfg.reg_idx = 12;
         trans_cfg.offset = offset;
         mpp_dev_ioctl(dev, MPP_DEV_REG_OFFSET, &trans_cfg);
-
-        if (fmt == MPP_FMT_YUV420P)
-            offset = hor_stride * start_mbrow * 16 / 4 + hor_stride * ver_stride * 5 / 4;
 
         trans_cfg.reg_idx = 13;
         trans_cfg.offset = offset;

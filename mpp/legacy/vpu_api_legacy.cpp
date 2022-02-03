@@ -39,7 +39,6 @@ static MppFrameFormat vpu_pic_type_remap_to_mpp(EncInputPictureType type)
     MppFrameFormat ret = MPP_FMT_BUTT;
     switch (type) {
     case ENC_INPUT_YUV420_PLANAR : {
-        ret = MPP_FMT_YUV420P;
     } break;
     case ENC_INPUT_YUV420_SEMIPLANAR : {
         ret = MPP_FMT_YUV420SP;
@@ -236,20 +235,6 @@ static int copy_align_raw_buffer_to_dest(RK_U8 *dst, RK_U8 *src, RK_U32 width,
             index += width;
         }
     } break;
-    case MPP_FMT_YUV420P : {
-        for (row = 0; row < height; row++) {
-            memcpy(dst_buf + row * hor_stride, src_buf + index, width);
-            index += width;
-        }
-        for (row = 0; row < height / 2; row++) {
-            memcpy(dst_u + row * hor_stride / 2, src_buf + index, width / 2);
-            index += width / 2;
-        }
-        for (row = 0; row < height / 2; row++) {
-            memcpy(dst_v + row * hor_stride / 2, src_buf + index, width / 2);
-            index += width / 2;
-        }
-    } break;
     case MPP_FMT_ABGR8888 :
     case MPP_FMT_ARGB8888 : {
         for (row = 0; row < height; row++) {
@@ -271,7 +256,6 @@ VpuApiLegacy::VpuApiLegacy() :
     frame_count(0),
     set_eos(0),
     memGroup(NULL),
-    format(MPP_FMT_YUV420P),
     fd_input(-1),
     fd_output(-1),
     mEosSet(0),

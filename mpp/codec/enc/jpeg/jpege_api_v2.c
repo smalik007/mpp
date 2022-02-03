@@ -154,7 +154,6 @@ static MPP_RET jpege_proc_prep_cfg(MppEncPrepCfg *dst, MppEncPrepCfg *src)
         }
 
         if ((fmt != MPP_FMT_YUV420SP    &&
-             fmt != MPP_FMT_YUV420P     &&
              fmt != MPP_FMT_YUV422SP_VU &&
              fmt != MPP_FMT_YUV422_YUYV &&
              fmt != MPP_FMT_YUV422_UYVY &&

@@ -72,9 +72,6 @@ static RgaFormat rga_fmt_map(MppFrameFormat fmt)
     RgaFormat ret;
 
     switch (fmt) {
-    case MPP_FMT_YUV420P:
-        ret = RGA_FMT_YCbCr_420_P;
-        break;
     case MPP_FMT_YUV420SP:
         ret = RGA_FMT_YCbCr_420_SP;
         break;

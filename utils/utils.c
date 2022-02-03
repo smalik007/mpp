@@ -103,21 +103,6 @@ void dump_mpp_frame_to_file(MppFrame frame, FILE *fp)
             fwrite(base_c, 1, width, fp);
         }
     } break;
-    case MPP_FMT_YUV420P : {
-        RK_U32 i;
-        RK_U8 *base_y = base;
-        RK_U8 *base_c = base + h_stride * v_stride;
-
-        for (i = 0; i < height; i++, base_y += h_stride) {
-            fwrite(base_y, 1, width, fp);
-        }
-        for (i = 0; i < height / 2; i++, base_c += h_stride / 2) {
-            fwrite(base_c, 1, width / 2, fp);
-        }
-        for (i = 0; i < height / 2; i++, base_c += h_stride / 2) {
-            fwrite(base_c, 1, width / 2, fp);
-        }
-    } break;
     case MPP_FMT_YUV444SP : {
         /* YUV444SP -> YUV444P for better display */
         RK_U32 i, j;
@@ -391,31 +376,6 @@ MPP_RET read_image(RK_U8 *buf, FILE *fp, RK_U32 width, RK_U32 height,
         for (row = 0; row < height / 2; row++) {
             read_size = fread(buf_u + row * hor_stride, 1, width, fp);
             if (read_size != width) {
-                ret  = MPP_NOK;
-                goto err;
-            }
-        }
-    } break;
-    case MPP_FMT_YUV420P : {
-        for (row = 0; row < height; row++) {
-            read_size = fread(buf_y + row * hor_stride, 1, width, fp);
-            if (read_size != width) {
-                ret  = MPP_NOK;
-                goto err;
-            }
-        }
-
-        for (row = 0; row < height / 2; row++) {
-            read_size = fread(buf_u + row * hor_stride / 2, 1, width / 2, fp);
-            if (read_size != width / 2) {
-                ret  = MPP_NOK;
-                goto err;
-            }
-        }
-
-        for (row = 0; row < height / 2; row++) {
-            read_size = fread(buf_v + row * hor_stride / 2, 1, width / 2, fp);
-            if (read_size != width / 2) {
                 ret  = MPP_NOK;
                 goto err;
             }
@@ -888,29 +848,6 @@ MPP_RET fill_image(RK_U8 *buf, RK_U32 width, RK_U32 height,
     case MPP_FMT_YUV422SP : {
         fill_MPP_FMT_YUV422SP(buf, width, height, hor_stride, ver_stride, frame_count);
     } break;
-    case MPP_FMT_YUV420P : {
-        RK_U8 *p = buf_y;
-
-        for (y = 0; y < height; y++, p += hor_stride) {
-            for (x = 0; x < width; x++) {
-                p[x] = x + y + frame_count * 3;
-            }
-        }
-
-        p = buf_c;
-        for (y = 0; y < height / 2; y++, p += hor_stride / 2) {
-            for (x = 0; x < width / 2; x++) {
-                p[x] = 128 + y + frame_count * 2;
-            }
-        }
-
-        p = buf_c + hor_stride * ver_stride / 4;
-        for (y = 0; y < height / 2; y++, p += hor_stride / 2) {
-            for (x = 0; x < width / 2; x++) {
-                p[x] = 64 + x + frame_count * 5;
-            }
-        }
-    } break;
     case MPP_FMT_YUV420SP_VU : {
         RK_U8 *p = buf_y;
 
@@ -1156,7 +1093,6 @@ typedef struct Ext2FrmFmt_t {
 } Ext2FrmFmt;
 
 Ext2FrmFmt map_ext_to_frm_fmt[] = {
-    {   "yuv420p",              MPP_FMT_YUV420P,                            },
     {   "yuv420sp",             MPP_FMT_YUV420SP,                           },
     {   "yuv422p",              MPP_FMT_YUV422P,                            },
     {   "yuv422sp",             MPP_FMT_YUV422SP,                           },

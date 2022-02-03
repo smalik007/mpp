@@ -395,12 +395,6 @@ MPP_RET h264e_vepu_prep_setup(HalH264eVepuPrep *prep, MppEncPrepCfg *cfg)
         prep->size_y = hor_stride * MPP_ALIGN(prep->src_h, 16);
         prep->size_c = hor_stride / 2 * MPP_ALIGN(prep->src_h / 2, 8);
     } break;
-    case MPP_FMT_YUV420P : {
-        prep->offset_cb = hor_stride * ver_stride;
-        prep->offset_cr = prep->offset_cb + ((hor_stride * ver_stride) / 4);
-        prep->size_y = hor_stride * MPP_ALIGN(prep->src_h, 16);
-        prep->size_c = hor_stride / 2 * MPP_ALIGN(prep->src_h / 2, 8);
-    } break;
     case MPP_FMT_YUV422_YUYV :
     case MPP_FMT_YUV422_UYVY : {
         prep->size_y = hor_stride * MPP_ALIGN(prep->src_h, 16);
